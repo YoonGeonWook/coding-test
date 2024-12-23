@@ -1,0 +1,9 @@
+import sys
+input = lambda: sys.stdin.readline().rstrip()
+
+while True:
+	try:
+		A, B = map(int, input().split())
+		print(A+B)
+	except: 
+		break
