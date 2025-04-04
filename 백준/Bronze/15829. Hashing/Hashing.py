@@ -6,7 +6,7 @@ def hash(L, string):
 	result = 0
 	for l in range(L):
 		result += (ord(string[l])-96) * 31**l
-	return result
+	return result % M
 
 # 입력
 L = int(input())
