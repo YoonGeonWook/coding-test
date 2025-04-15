@@ -1,24 +1,20 @@
 import sys
 input = sys.stdin.readline
 
-from collections import deque
+# 최대 재귀 깊이 설정
+sys.setrecursionlimit(10000)
 
-def bfs(graph, visited, x, y):
-	queue = deque([(x, y)])
+def dfs(graph, visited, x, y, color):
 	visited[x][y] = 1 # 시작 지점 방문 처리
 
-	while queue:
-		x, y = queue.popleft()
-
-		for i in range(4):
-			nx = x + dx[i]
-			ny = y + dy[i]
-
-			# 범위 안에 있고, 방문한 적이 없고, 같은 색상인 경우만
-			if 0 <= nx < N and 0 <= ny < N:
-				if visited[nx][ny] == 0 and graph[nx][ny] == graph[x][y]:
-					visited[nx][ny] = 1
-					queue.append((nx, ny))
+	for i in range(4):
+		nx = x + dx[i]
+		ny = y + dy[i]
+	
+		# 범위 내에 있고, 방문한 적이 없고, 같은 색상인 경우만 처리
+		if 0 <= nx < N and 0 <= ny < N:
+			if not visited[nx][ny] and graph[nx][ny] == color:
+				dfs(graph, visited, nx, ny, color)
 
 def count_regions(graph):
 	visited = [[0] * N for _ in range(N)]
@@ -27,7 +23,7 @@ def count_regions(graph):
 	for i in range(N):
 		for j in range(N):
 			if not visited[i][j]:
-				bfs(graph, visited, i, j)
+				dfs(graph, visited, i, j, graph[i][j])
 				count += 1
 	return count
 
